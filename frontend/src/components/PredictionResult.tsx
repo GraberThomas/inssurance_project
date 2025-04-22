@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, ListGroup, Row, Col, Badge } from "react-bootstrap";
+import {Card, ListGroup, Row, Col, Badge, Alert} from "react-bootstrap";
 import {Plan, PredictionResponse} from "../types/inssurance.ts";
 
 // Mapping risk levels to friendly labels
@@ -87,6 +87,9 @@ const PredictionResult: React.FC<PredictionResultProps> = ({ result }) => (
                             <span>impact {factor.shap_value.toFixed(2)}</span>
                         </ListGroup.Item>
                     ))}
+                    {result.top_factors.length == 0 && (
+                        <Alert variant="warning">Le modèle sélectionné ne prend pas en charge les facteurs.</Alert>
+                    )}
                 </ListGroup>
             </Card.Body>
         </Card>

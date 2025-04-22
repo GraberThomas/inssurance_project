@@ -22,3 +22,14 @@ export interface PredictionResponse {
     top_factors: TopFactor[];
     suggestions: string[];
 }
+
+export interface FormData {
+    firstName: string;
+    lastName: string;
+    age: number;
+    sex: "male" | "female";
+    region: "northeast" | "northwest" | "southeast" | "southwest";
+    bmi: number;
+    children: number;
+    smoker: boolean;
+}

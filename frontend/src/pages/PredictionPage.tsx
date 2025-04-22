@@ -10,23 +10,16 @@ import {
     ListGroup,
     Container
 } from "react-bootstrap";
-import axios from "axios";
-import Layout from "../components/Layout.tsx";
-import PredictionResult from "../components/PredictionResult.tsx";
-import {PredictionResponse} from "../types/inssurance.ts";
-
-interface FormData {
-    firstName: string;
-    lastName: string;
-    age: number;
-    sex: "male" | "female";
-    region: "northeast" | "northwest" | "southeast" | "southwest";
-    bmi: number;
-    children: number;
-    smoker: boolean;
-}
+import Layout from "../components/Layout";
+import {PredictionResponse} from "../types/inssurance";
+import {FormData} from "../types/inssurance";
+import {selectedModelAtom} from "../atoms/models";
+import {predictInsurance} from "../api/inssurance";
+import {useAtomValue} from "jotai";
+import PredictionResult from "../components/PredictionResult";
 
 const PredictionPage = () => {
+    const model = useAtomValue(selectedModelAtom);
     const [step, setStep] = useState<number>(0);
     const [formData, setFormData] = useState<FormData>({
         firstName: "",
@@ -65,21 +58,16 @@ const PredictionPage = () => {
         setLoading(true);
         setError(null);
         try {
-            const res = await axios.post<PredictionResponse>(
-                "http://localhost:8000/models/gradient_boosting/predict",
-                formData
-            );
-            setResult(res.data);
+            const data = await predictInsurance(model, formData);
+            setResult(data);
         } catch (err: any) {
-            let message = "Erreur lors de la prédiction.";
+            let message = 'Erreur lors de la prédiction.';
             const detail = err.response?.data?.detail;
-            if (typeof detail === "string") {
+            if (typeof detail === 'string') {
                 message = detail;
             } else if (Array.isArray(detail)) {
-                message = detail
-                    .map((d) => d.msg || JSON.stringify(d))
-                    .join("; ");
-            } else if (detail && typeof detail === "object") {
+                message = detail.map((d) => d.msg || JSON.stringify(d)).join('; ');
+            } else if (detail && typeof detail === 'object') {
                 message = JSON.stringify(detail);
             }
             setError(message);
