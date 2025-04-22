@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 
 from model_struct import PredictionResponse
 from plan import DEDUCTIBLE_RATE, CEILING_RATE
@@ -8,6 +9,18 @@ from model_load import load_models
 
 models = load_models()
 app = FastAPI()
+
+origins = [
+    "http://localhost:5173",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,  # ou ["*"] pour tout autoriser (à éviter en prod)
+    allow_credentials=True,
+    allow_methods=["*"],  # ou ["GET", "POST", "PUT", "DELETE", ...]
+    allow_headers=["*"],  # ou spécifie les headers autorisés
+)
 
 @app.get("/models")
 def list_models():

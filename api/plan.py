@@ -86,7 +86,7 @@ def build_recommendation(prediction, model, df):
         "plan": {
             "name": level.capitalize(),
             "franchise": plan["franchise"],
-            "ceil": plan["ceil"] if plan["ceil"] != float("inf") else "Infinite",
+            "ceiling": plan["ceiling"] if plan["ceiling"] != float("inf") else "Infinite",
             "refund_estimate": plan["refund"],
             "annual_price": plan["annual_price"],
             "monthly_price": plan["monthly_price"]

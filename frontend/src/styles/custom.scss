@@ -1,1 +1,13 @@
+$primary: #007bff;
+$secondary: #f0f4f8;
+$accent: #ffc107;
+$text-color: #212529;
+$border-radius: 0.5rem;
+$box-shadow-light: 0 2px 6px rgba(0, 0, 0, 0.1);
+
 @import "bootstrap/scss/bootstrap";
+
+body {
+  background-color: $secondary;
+  font-family: 'Poppins', sans-serif;
+}
