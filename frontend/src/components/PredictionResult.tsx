@@ -1,5 +1,5 @@
 import React from "react";
-import {Card, ListGroup, Row, Col, Badge, Alert} from "react-bootstrap";
+import {Card, ListGroup, Row, Col, Badge, Alert, Button, Container} from "react-bootstrap";
 import {Plan, PredictionResponse} from "../types/inssurance.ts";
 
 // Mapping risk levels to friendly labels
@@ -32,8 +32,11 @@ const PlanCard: React.FC<PlanCardProps> = ({ plan, label }) => (
 );
 
 // Main result component
-interface PredictionResultProps { result: PredictionResponse }
-const PredictionResult: React.FC<PredictionResultProps> = ({ result }) => (
+interface PredictionResultProps {
+    result: PredictionResponse
+    reset: () => void
+}
+const PredictionResult: React.FC<PredictionResultProps> = ({ result, reset }) => (
     <>
         {/* Résumé */}
         <Card className="mb-4 shadow-sm">
@@ -107,19 +110,16 @@ const PredictionResult: React.FC<PredictionResultProps> = ({ result }) => (
                 </Card.Body>
             </Card>
         )}
+
+        <Container>
+            <div className="d-flex justify-content-center mb-4">
+                <Button variant="primary" onClick={() => reset()}>
+                    Fermer la simulation
+                </Button>
+            </div>
+        </Container>
+
     </>
 );
 
 export default PredictionResult;
-
-// Usage:
-// Dans votre PredictionPage.tsx, importez et utilisez ce composant :
-// import PredictionResult from "../components/PredictionResult";
-// ...
-// if (result) {
-//   return (
-//     <Layout>
-//       <PredictionResult result={result} />
-//     </Layout>
-//   );
-// }

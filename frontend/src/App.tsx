@@ -3,13 +3,13 @@ import './App.css'
 import { useEffect, useState } from 'react'
 import { Route, Routes, BrowserRouter } from 'react-router-dom'
 import { Container, Spinner } from 'react-bootstrap'
-import axios from 'axios'
 import { useAtom } from 'jotai'
 import { modelsAtom, selectedModelAtom } from './atoms/models'
 import PredictionPage from './pages/PredictionPage'
 import AnalysisPage   from './pages/AnalysisPage'
 import ModelsPage     from './pages/ModelsPage'
 import SettingsPage   from './pages/SettingsPage'
+import {fetchModels} from "./api/inssurance.ts";
 
 function App() {
     const [, setModels] = useAtom(modelsAtom)
@@ -19,9 +19,7 @@ function App() {
     useEffect(() => {
         async function loadModels() {
             try {
-                const { data } = await axios.get<Record<string, any>>(
-                    'http://localhost:8000/models'
-                )
+                const data = await fetchModels()
                 setModels(data)
 
                 const bestModel = Object.entries(data)

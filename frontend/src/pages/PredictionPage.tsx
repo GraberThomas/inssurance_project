@@ -30,6 +30,7 @@ const PredictionPage = () => {
         bmi: 25,
         children: 0,
         smoker: false,
+        save_data: false,
     });
     const [result, setResult] = useState<PredictionResponse | null>(null);
     const [loading, setLoading] = useState(false);
@@ -76,10 +77,29 @@ const PredictionPage = () => {
         }
     };
 
+    const handleReset = () => {
+        setStep(0);
+        setFormData({
+            firstName: "",
+            lastName: "",
+            age: 30,
+            sex: "male",
+            region: "northeast",
+            bmi: 25,
+            children: 0,
+            smoker: false,
+            save_data: false,
+        });
+        setResult(null);
+        setLoading(false);
+        setError(null);
+    };
+
+
     if (result) {
         return (
             <Layout>
-                <PredictionResult result={result} />
+                <PredictionResult result={result} reset={handleReset} />
             </Layout>
         );
     }
@@ -128,6 +148,7 @@ const PredictionPage = () => {
                                                         value={formData.firstName}
                                                         onChange={handleChange}
                                                         required
+                                                        placeholder={"Jean"}
                                                     />
                                                 </Form.Group>
                                             </Col>
@@ -140,6 +161,7 @@ const PredictionPage = () => {
                                                         value={formData.lastName}
                                                         onChange={handleChange}
                                                         required
+                                                        placeholder={"Dupont"}
                                                     />
                                                 </Form.Group>
                                             </Col>
@@ -271,8 +293,29 @@ const PredictionPage = () => {
                                     </Form>
                                 )}
 
-                                {/* Étape 6 */}
                                 {step === 6 && (
+                                    <Form>
+                                        <h4 className="mb-4">Sauvegarde du nom et prenom </h4>
+                                        <Form.Group controlId="save_data" className="mb-3">
+                                            <Form.Check
+                                                type="checkbox"
+                                                name="save_data"
+                                                checked={formData.save_data}
+                                                onChange={handleChange}
+                                                label="Sauvegarde"
+                                            />
+                                        </Form.Group>
+                                        <div className="mt-4 d-flex justify-content-between">
+                                            <Button variant="secondary" onClick={handleBack}>
+                                                Précédent
+                                            </Button>
+                                            <Button onClick={handleNext}>Suivant</Button>
+                                        </div>
+                                    </Form>
+                                )}
+
+                                {/* Étape 7 */}
+                                {step === 7 && (
                                     <>
                                         <h4 className="mb-4">Récapitulatif</h4>
                                         <ListGroup className="mb-3">
@@ -284,6 +327,7 @@ const PredictionPage = () => {
                                             <ListGroup.Item><strong>Enfants:</strong> {formData.children}</ListGroup.Item>
                                             <ListGroup.Item><strong>IMC:</strong> {formData.bmi}</ListGroup.Item>
                                             <ListGroup.Item><strong>Fumeur:</strong> {formData.smoker ? 'Oui' : 'Non'}</ListGroup.Item>
+                                            <ListGroup.Item><strong>Sauvegarde du nom et du prenom:</strong> {formData.save_data ? 'Oui' : 'Non'}</ListGroup.Item>
                                         </ListGroup>
                                         <div className="mt-4 d-flex justify-content-between">
                                             <Button variant="secondary" onClick={handleBack}>

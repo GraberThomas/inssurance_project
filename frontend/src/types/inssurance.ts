@@ -32,4 +32,5 @@ export interface FormData {
     bmi: number;
     children: number;
     smoker: boolean;
+    save_data: boolean;
 }
