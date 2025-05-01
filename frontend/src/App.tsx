@@ -6,7 +6,7 @@ import { Container, Spinner } from 'react-bootstrap'
 import { useAtom } from 'jotai'
 import { modelsAtom, selectedModelAtom } from './atoms/models'
 import PredictionPage from './pages/PredictionPage'
-import AnalysisPage   from './pages/AnalysisPage'
+import HistoryPage   from './pages/HistoryPage.tsx'
 import ModelsPage     from './pages/ModelsPage'
 import SettingsPage   from './pages/SettingsPage'
 import {fetchModels} from "./api/inssurance.ts";
@@ -62,7 +62,7 @@ function App() {
             <Container className="mt-4">
                 <Routes>
                     <Route path="/" element={<PredictionPage />} />
-                    <Route path="/analysis" element={<AnalysisPage />} />
+                    <Route path="/history" element={<HistoryPage />} />
                     <Route path="/models" element={<ModelsPage />} />
                     <Route path="/settings" element={<SettingsPage />} />
                 </Routes>

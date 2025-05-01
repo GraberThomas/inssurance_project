@@ -17,6 +17,7 @@ import {selectedModelAtom} from "../atoms/models";
 import {predictInsurance} from "../api/inssurance";
 import {useAtomValue} from "jotai";
 import PredictionResult from "../components/PredictionResult";
+import {saveResult} from "../api/persistance.ts";
 
 const PredictionPage = () => {
     const model = useAtomValue(selectedModelAtom);
@@ -60,6 +61,7 @@ const PredictionPage = () => {
         setError(null);
         try {
             const data = await predictInsurance(model, formData);
+            await saveResult(formData, data, model);
             setResult(data);
         } catch (err: any) {
             let message = 'Erreur lors de la prédiction.';
@@ -211,7 +213,6 @@ const PredictionPage = () => {
                                                 onChange={handleChange}
                                             >
                                                 <option value="northeast">Nord-Est</option>
-                                                <option value="northwest">Nord-Ouest</option>
                                                 <option value="southeast">Sud-Est</option>
                                                 <option value="southwest">Sud-Ouest</option>
                                             </Form.Select>

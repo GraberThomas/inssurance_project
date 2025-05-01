@@ -7,10 +7,6 @@ const API_BASE = import.meta.env.VITE_API_MODEL_URL
 const API_MODEL_ROUTE = import.meta.env.VITE_MODEL_ROUTE;
 const MODEL_PREDICT_SUBROUTE = import.meta.env.VITE_MODEL_PREDICT_SUBROUTE;
 
-console.log(API_BASE)
-console.log(API_MODEL_ROUTE)
-console.log(MODEL_PREDICT_SUBROUTE)
-
 export function buildPredictUrl(model: string): string {
     return `${API_BASE}${API_MODEL_ROUTE}/${model}${MODEL_PREDICT_SUBROUTE}`;
 }

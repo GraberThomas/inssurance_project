@@ -20,6 +20,7 @@ services:
             VITE_API_MODEL_URL: ${VITE_API_MODEL_URL}
             VITE_MODEL_ROUTE: ${VITE_MODEL_ROUTE}
             VITE_MODEL_PREDICT_SUBROUTE: ${VITE_MODEL_PREDICT_SUBROUTE}
+            VITE_API_PERSISTANCE_URL: ${VITE_API_PERSISTANCE_URL}
     container_name: inssurance_frontend
     restart: always
     ports:
