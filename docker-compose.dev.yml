@@ -1,0 +1,97 @@
+services:
+  inssurance_backend:
+    build: api/
+    container_name: inssurance_backend
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - "8000:8000"
+    networks:
+      - inssurance_net
+    env_file:
+      - .env
+
+  inssurance_frontend:
+    build:
+        context: frontend/
+        dockerfile: Dockerfile
+        args:
+            VITE_API_MODEL_URL: ${VITE_API_MODEL_URL}
+            VITE_MODEL_ROUTE: ${VITE_MODEL_ROUTE}
+            VITE_MODEL_PREDICT_SUBROUTE: ${VITE_MODEL_PREDICT_SUBROUTE}
+    container_name: inssurance_frontend
+    restart: always
+    ports:
+        - "80:80"
+    networks:
+        - inssurance_net
+    depends_on:
+      - inssurance_backend
+  
+  inssurance_persistence:
+    build:
+      context: backend_persistence
+      dockerfile: Dockerfile
+    container_name: inssurance_persistence
+    restart: always
+    ports:
+      - "8001:8001"
+    networks:
+      - inssurance_net
+    depends_on:
+      - db
+    env_file:
+      - .env
+  
+  migrations:
+    build: backend_persistence
+    container_name: alembic_migration_job
+    env_file:
+      - .env
+    depends_on:
+      - db
+    command: alembic upgrade head
+    networks:
+      - inssurance_net
+    restart: "no"
+    profiles:
+      - tools
+
+  db:
+    image: postgres:15
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    expose:
+      - "5432"
+    networks:
+      - inssurance_net
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    depends_on:
+      - db
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    networks:
+      - inssurance_net
+
+volumes:
+  postgres_data:
+  pgadmin_data:
+
+networks:
+  inssurance_net:

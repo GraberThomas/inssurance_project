@@ -1,0 +1,5 @@
+Run:
+sudo docker compose -f docker-compose.dev.yml up  --build
+
+Migrations:
+sudo docker compose -f docker-compose.dev.yml --profile tools run --rm migrations

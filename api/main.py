@@ -11,16 +11,18 @@ models = load_models()
 app = FastAPI()
 
 origins = [
-    "http://localhost:5173",
+    "http://localhost",
+    "http://localhost:80",
 ]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,  # ou ["*"] pour tout autoriser (à éviter en prod)
+    allow_origins=origins,
     allow_credentials=True,
-    allow_methods=["*"],  # ou ["GET", "POST", "PUT", "DELETE", ...]
-    allow_headers=["*"],  # ou spécifie les headers autorisés
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
+
 
 @app.get("/models")
 def list_models():
