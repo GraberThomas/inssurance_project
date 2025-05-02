@@ -19,6 +19,21 @@ CEILING_RATE = {
 }
 
 def get_risk_level(prediction):
+    """
+    Determines the risk level based on a given prediction threshold.
+
+    The function evaluates the input `prediction` value and compares it
+    against predefined thresholds, `q1` and `q2`. It categorizes the risk
+    into one of three levels: "lower", "moderate", or "high", depending on
+    the comparison results.
+
+    :param prediction: The numerical value representing the prediction to
+        be evaluated against predefined risk thresholds.
+    :type prediction: float
+    :return: A string indicating the risk level: either "lower", "moderate",
+        or "high".
+    :rtype: str
+    """
     if prediction < q1:
         return "lower"
     elif prediction < q2:
@@ -30,6 +45,20 @@ MARGIN = 0.05
 
 
 def dynamic_plan(prediction):
+    """
+    Analyzes the risk level of a given prediction and computes financial metrics such
+    as franchise, ceiling, refund, and the corresponding annual and monthly prices
+    based on pre-defined rates and margins.
+
+    :param prediction: The predicted monetary value for which the dynamic plan will
+                       be computed.
+    :type prediction: float
+
+    :return: A dictionary containing the input prediction, computed risk level,
+             franchise amount, ceiling amount, refund amount, annual price, and
+             monthly price for the dynamic plan.
+    :rtype: dict
+    """
     level = get_risk_level(prediction)
     tf = DEDUCTIBLE_RATE[level]
     tp = CEILING_RATE[level]
@@ -52,6 +81,30 @@ def dynamic_plan(prediction):
     }
 
 def build_recommendation(prediction, model, df):
+    """
+    Builds a personalized recommendation for a client by analyzing risk level,
+    providing tailored health suggestions, highlighting influential factors using
+    SHAP analysis, and constructing a comprehensive response plan.
+
+    The function incorporates dynamic planning based on the given prediction,
+    analyzes health-related habits or concerns, and utilizes SHAP explainer
+    mechanisms to determine features with the greatest impact. The final result
+    is a structured response containing critical details such as risk level,
+    health plans, top factors influencing the decision, and actionable health
+    suggestions.
+
+    :param prediction: The outcome from the machine learning model representing
+        the risk prediction for the client.
+    :type prediction: Any
+    :param model: The trained machine learning model used for SHAP explanations.
+    :type model: Any
+    :param df: A DataFrame containing the input data corresponding to the client,
+        with features required for analysis and SHAP evaluations.
+    :type df: pandas.DataFrame
+    :return: A dictionary containing the client's risk level, health plan details,
+        the top factors determined using SHAP, and health improvement suggestions.
+    :rtype: dict
+    """
     # 1. Calcul du plan dynamique
     plan = dynamic_plan(prediction)
     level = plan["risk_level"]
