@@ -1,5 +1,9 @@
 # Insurance Cost Prediction Microservices Suite
 
+## Preview 
+
+A demo of the service is available in addresss: http://51.178.31.60/
+
 ## Overview
 
 This repository contains all the services required to deploy a comprehensive solution for **insurance cost prediction** and **tailored insurance plan recommendations** for clients. By leveraging machine learning, we’ve generated models capable of accurately predicting healthcare insurance costs based on user-provided data and proposing suitable insurance plans.
