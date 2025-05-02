@@ -8,7 +8,6 @@ import { modelsAtom, selectedModelAtom } from './atoms/models'
 import PredictionPage from './pages/PredictionPage'
 import HistoryPage   from './pages/HistoryPage.tsx'
 import ModelsPage     from './pages/ModelsPage'
-import SettingsPage   from './pages/SettingsPage'
 import {fetchModels} from "./api/inssurance.ts";
 
 function App() {
@@ -64,7 +63,6 @@ function App() {
                     <Route path="/" element={<PredictionPage />} />
                     <Route path="/history" element={<HistoryPage />} />
                     <Route path="/models" element={<ModelsPage />} />
-                    <Route path="/settings" element={<SettingsPage />} />
                 </Routes>
             </Container>
         </BrowserRouter>

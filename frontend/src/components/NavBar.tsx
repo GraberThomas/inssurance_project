@@ -19,7 +19,6 @@ const NavBar: React.FC = () => {
                         <Nav.Link as={Link} to="/">Simulation</Nav.Link>
                         <Nav.Link as={Link} to="/models">Modèles</Nav.Link>
                         <Nav.Link as={Link} to="/history">Historique</Nav.Link>
-                        <Nav.Link as={Link} to="/settings">Paramètres</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Container>
