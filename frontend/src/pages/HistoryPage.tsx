@@ -1,4 +1,12 @@
-// src/pages/HistoryPage.tsx
+/**
+ * HistoryPage component displays a paginated list of insurance predictions with filtering capabilities.
+ * Features:
+ * - Filters by model name, sex, smoker status, region, age range, and children count
+ * - Paginated results with configurable items per page
+ * - Detailed view of each prediction in an accordion layout
+ * - Error handling and loading states
+ * - Dynamic model name options loaded from API
+ */
 import { useState, useEffect } from "react";
 import {
     Container,
@@ -16,6 +24,9 @@ import Layout from "../components/Layout";
 import type { Prediction } from "../types/inssurance";
 import { getPaginatedPredictions, getModelNames } from "../api/persistance";
 
+/**
+ * Generic interface for paginated API responses
+ */
 interface Paginated<T> {
     items: T[];
     total: number;
@@ -24,8 +35,21 @@ interface Paginated<T> {
     limit: number;
 }
 
+/**
+ * HistoryPage is a React functional component that renders a view for managing and displaying a historical list of predictions.
+ * It provides filtering options for searching predictions based on various criteria such as model name, sex, smoking status, region, age range, and number of children.
+ * The component supports pagination and fetches a paginated list of predictions from an external API.
+ * It also handles UI interactions for filters, error handling during data fetching, and the displaying of prediction details in an accordion layout.
+ *
+ * Component Features:
+ * - Filters to refine the displayed prediction data by various parameters.
+ * - Pagination for navigating through the list of predictions.
+ * - Dynamic fetching of model names and prediction data from APIs.
+ * - Displays predictions and detailed information including metadata (name, age, risk level, model, etc.).
+ * - Loading state and error handling.
+ */
 const HistoryPage = () => {
-    // --- filtres ---
+    // --- filters ---
     const [modelName, setModelName] = useState<string>("");
     const [sex, setSex] = useState<string>("");
     const [smoker, setSmoker] = useState<string>("");
@@ -36,7 +60,7 @@ const HistoryPage = () => {
     const [childrenMin, setChildrenMin] = useState<number | "">("");
     const [childrenMax, setChildrenMax] = useState<number | "">("");
 
-    // --- pagination & données ---
+    // --- paginate and data ---
     const [items, setItems] = useState<Prediction[]>([]);
     const [page, setPage] = useState<number>(1);
     const [pages, setPages] = useState<number>(1);
@@ -48,6 +72,11 @@ const HistoryPage = () => {
 
     const [modelOptions, setModelOptions] = useState<string[]>([]);
 
+    /**
+     * Loads the list of model names from the API and sets the options for the model name filter.
+     * The model names are used to populate the model name filter dropdown.
+     * The model names are also used to populate the model name column in the prediction table.
+     */
     useEffect(() => {
         getModelNames()
             .then(data => {
@@ -65,6 +94,9 @@ const HistoryPage = () => {
             .catch(() => {});
     }, []);
 
+    /**
+     * Fetches a paginated list of predictions from the API based on the current filter settings.
+     */
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);

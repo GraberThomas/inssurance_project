@@ -1,15 +1,23 @@
+/**
+ * PredictionResult component displays the insurance prediction results including:
+ * - Summary card with estimated cost, interval, and risk level
+ * - Suggested insurance plan card with pricing details
+ * - Main factors affecting the prediction with their impact values
+ * - Optional suggestions for improvement
+ * - Reset button to close the simulation
+ */
 import React from "react";
 import {Card, ListGroup, Row, Col, Badge, Alert, Button, Container} from "react-bootstrap";
 import {Plan, PredictionResponse} from "../types/inssurance.ts";
 
-// Mapping risk levels to friendly labels
+/** Mapping of risk levels to display labels */
 const planLabels: Record<PredictionResponse['risk_level'], string> = {
     lower: "Eco",
     moderate: "Medium",
     high: "Premium",
 };
 
-// Reusable PlanCard component
+/** Props for the PlanCard subcomponent */
 interface PlanCardProps {
     plan: Plan;
     label: string;
@@ -31,7 +39,7 @@ const PlanCard: React.FC<PlanCardProps> = ({ plan, label }) => (
     </Card>
 );
 
-// Main result component
+/** Props for the PredictionResult component */
 interface PredictionResultProps {
     result: PredictionResponse
     reset: () => void

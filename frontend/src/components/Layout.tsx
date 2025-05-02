@@ -1,3 +1,9 @@
+/**
+ * Layout component that provides a consistent page structure with navigation bar,
+ * main content area, and footer. It wraps the main content in a flex container
+ * to ensure the footer stays at the bottom of the page.
+ */
+
 import { Container, Stack } from "react-bootstrap";
 import { ReactNode } from "react";
 
@@ -23,7 +29,7 @@ const Layout = ({ children }: LayoutProps) => {
                             <span className="text-muted">|</span>
                             <a href="#" className="text-muted link-primary text-decoration-none">CGU</a>
                             <span className="text-muted">|</span>
-                            <a href="mailto:contact@assurix.io" className="text-muted link-primary text-decoration-none">Contact</a>
+                            <a href="mailto:contact@symetra.com" className="text-muted link-primary text-decoration-none">Contact</a>
                         </Stack>
                     </Stack>
                 </Container>

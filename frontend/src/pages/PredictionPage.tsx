@@ -1,3 +1,18 @@
+/**
+ * PredictionPage Component
+ *
+ * A React component that implements a multi-step form for insurance prediction.
+ * It collects user information through various steps including personal details,
+ * location, family information, health data, and habits.
+ *
+ * Features:
+ * - Multi-step form navigation
+ * - Form data validation
+ * - Integration with prediction API
+ * - Result persistence
+ * - Error handling
+ * - Loading states
+ */
 import { useState, ChangeEvent } from "react";
 import {
     Form,
@@ -19,6 +34,17 @@ import {useAtomValue} from "jotai";
 import PredictionResult from "../components/PredictionResult";
 import {saveResult} from "../api/persistance.ts";
 
+/**
+ * The `PredictionPage` component handles a multi-step form for collecting user details
+ * related to insurance prediction, controls state management, and displays prediction results.
+ *
+ * This component contains:
+ * - Initialization and management of form data for user input.
+ * - Multi-step navigation through the form steps.
+ * - Validation and handling of user inputs.
+ * - Submission of the form and prediction logic.
+ * - Display of prediction results or any errors encountered during the process.
+ */
 const PredictionPage = () => {
     const model = useAtomValue(selectedModelAtom);
     const [step, setStep] = useState<number>(0);
@@ -37,6 +63,16 @@ const PredictionPage = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
+    /**
+     * Handles the change event for input, select, and textarea elements.
+     *
+     * This function is used to update the state of a form dynamically when a change occurs
+     * in an input, select, or textarea element. It processes various input types, such as
+     * checkboxes and numeric fields, to appropriately set their values in the state object.
+     *
+     * @param {ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>} e - The event triggered by a change in the form element.
+     * This includes inputs, selects, and textareas.
+     */
     const handleChange = (
         e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
     ) => {
@@ -53,9 +89,36 @@ const PredictionPage = () => {
         }));
     };
 
+    /**
+     * Increments the current step value by 1.
+     *
+     * This function is designed to update the state of a step counter by utilizing
+     * a callback to retrieve and increment the current step value. Commonly used
+     * in scenarios where navigation or sequential step transitions are required within an application.
+     *
+     * @function
+     * @returns {void} Does not return a value, but updates the step state.
+     */
     const handleNext = () => setStep((s) => s + 1);
+
+    /**
+     * A function that decrements the current step state by 1.
+     * This function is typically used to navigate to the previous step in a multi-step process.
+     */
     const handleBack = () => setStep((s) => s - 1);
 
+    /**
+     * Asynchronous function to handle the confirmation process, including data prediction,
+     * result saving, and error handling. It initiates with setting a loading state
+     * and resets any previous errors. It then calls the required functions to predict
+     * insurance data based on the provided model and formData, and subsequently saves the result.
+     * In case of an error during these operations, it captures and processes the error message
+     * to provide a meaningful feedback. Finally, it ensures the loading state is reset
+     * once the process is complete.
+     *
+     * @function handleConfirm
+     * @async
+     */
     const handleConfirm = async () => {
         setLoading(true);
         setError(null);
