@@ -1,13 +1,23 @@
+"""
+This module defines SQLModel classes for database modeling in the insurance prediction system.
+
+Classes:
+    ModelInfo: Represents an ML model's metadata and its relationship to predictions
+    Prediction: Stores prediction results, user data, and insurance plan recommendations
+"""
+
 from typing import Optional, List
 from sqlmodel import SQLModel, Field, Relationship
 from datetime import datetime
 
 class ModelInfo(SQLModel, table=True):
+    """Stores metadata about ML models used for predictions."""
     id: Optional[int] = Field(default=None, primary_key=True)
     name: str = Field(unique=True)
     predictions: List["Prediction"] = Relationship(back_populates="model")
 
 class Prediction(SQLModel, table=True):
+    """Stores individual prediction results including user data, predictions, and recommendations."""
     id: Optional[int] = Field(default=None, primary_key=True)
 
     nom: Optional[str] = None

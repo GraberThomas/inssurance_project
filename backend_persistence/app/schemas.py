@@ -1,4 +1,13 @@
-# app/schemas.py
+"""
+This module defines the Pydantic models for API input/output validation and serialization.
+
+Models:
+- AssuranceProfil: Input schema for user insurance profile data
+- TopFactor: Schema for important factors affecting insurance prediction
+- Plan: Schema for insurance plan details and pricing
+- PredictionResponse: Complete response schema with prediction results and recommendations
+"""
+
 from pydantic import BaseModel, Field
 from typing import Optional, List, Union, Literal, Annotated
 

@@ -1,4 +1,13 @@
-# app/seed/fake_data.py
+"""
+This module generates fake insurance prediction data for testing and development.
+
+It provides functionality to:
+- Connect to the backend API and wait for its availability
+- Create or retrieve ML model information
+- Generate random user profiles with Faker
+- Make API prediction calls with fake profiles
+- Store prediction results in the database
+"""
 
 import os
 import random
@@ -13,7 +22,6 @@ from sqlmodel import Session, select
 from app.database import get_engine
 from app.models import ModelInfo, Prediction
 
-# URL de ton backend FastAPI (docker-compose host/service)
 BACKEND_URL = os.getenv("INSSURANCE_BACKEND_URL", "http://inssurance_backend:8000")
 N = 1000
 faker = Faker()
@@ -35,13 +43,19 @@ def wait_for_backend(timeout: int = 60, interval: int = 2):
     raise RuntimeError(f"Backend not ready after {timeout}s")
 
 def main():
+    """
+    Seeds the database with prediction records by fetching model information
+    from a backend service, generating fake user data, and interacting with
+    an external API to obtain prediction results. The function commits the
+    seeded data into the database using a provided session.
+
+    :return: None
+    """
     wait_for_backend()
 
-    # 1) Crée une session à partir de l'engine
     engine = get_engine()
     session = Session(engine)
 
-    # 2) Récupère (ou crée) les ModelInfo
     models = session.exec(select(ModelInfo)).all()
     if not models:
         resp = requests.get(f"{BACKEND_URL}/models")
@@ -58,7 +72,6 @@ def main():
         session.commit()
         models = session.exec(select(ModelInfo)).all()
 
-    # 3) Génère N profils et appelle l’API pour seed la vraie prédiction
     for _ in range(N):
         model = random.choice(models)
         profil = {
@@ -76,7 +89,6 @@ def main():
             json=profil
         ).json()
 
-        # 4) Construit et ajoute la ligne en base
         record = Prediction(
             nom=profil["nom"],
             prenom=profil["prenom"],

@@ -1,3 +1,12 @@
+"""
+This module handles the initial seeding of ML model metadata from the backend service.
+
+It provides:
+- Automatic fetching of model data from the backend API
+- Database seeding of ModelInfo records if they don't exist
+- Retry mechanism for backend connectivity issues
+"""
+
 import os
 
 from sqlmodel import Session, select
@@ -8,6 +17,13 @@ import asyncio
 import requests
 
 async def seed_models_if_needed():
+    """
+    Fetches model metadata from backend and seeds the database if needed.
+    
+    Makes up to 5 attempts to connect to the backend service with 2 second delays
+    between retries. For each model returned by the backend, creates a ModelInfo
+    record if it doesn't already exist in the database.
+    """
     url = os.path.join(os.getenv("INSSURANCE_BACKEND_URL"), "models")
 
     for attempt in range(5):
