@@ -22,24 +22,26 @@ flowchart TD
     subgraph Frontend
       FE[React Application]
     end
-    subgraph API
-      API[FastAPI – Prediction & Recommendations]
+    subgraph API_Service
+      APISvc[FastAPI – Prediction & Recommendations]
     end
     subgraph Persistence
-      DB[(Database)]
       BP[backend_persistence]
     end
     subgraph DataModel
       DM[Model Training]
     end
 
-    FE --> |JSON Request| API
-    API --> |Model Invocation| DM
-    API --> |Save Prediction| BP --> DB
+    DB[(Database)]
+
+    FE --> |JSON Request| APISvc
+    APISvc --> |Model Invocation| DM
+    APISvc --> |Save Prediction| BP
+    BP <--> DB
     BP --> |Provide History| FE
 ```
 
-1. The user enters their profile data in the frontend.
+1. The insurers enters client profile data in the frontend.
 2. The frontend sends a POST request to the API endpoint `/predict`.
 3. The API calls the **data\_model** service to load and execute the ML model.
 4. The model returns predicted insurance cost, confidence intervals, and personalized plan recommendations.
@@ -63,18 +65,23 @@ flowchart TD
    * Copy `.env.example` to `.env` in the project root and adjust as needed:
 
      ```env
-     POSTGRES_USER=postgres
-     POSTGRES_PASSWORD=password
-     POSTGRES_DB=insurance_data
+        # DATABASE CREDENTIAL - For developpement database
+        POSTGRES_USER=postgres
+        POSTGRES_PASSWORD=password
+        POSTGRES_DB=inssurance_data
 
-     DATABASE_URL=postgresql://postgres:password@db:5432/insurance_data
+        # DATABASE URL - For access to database
+        DATABASE_URL=postgresql://postgres:password@db:5432/inssurance_data
 
-     VITE_API_MODEL_URL=http://localhost:8000
-     VITE_MODEL_ROUTE=/models
-     VITE_MODEL_PREDICT_SUBROUTE=/predict
-     VITE_API_PERSISTENCE_URL=http://localhost:8001
+        # ENV VALUE FOR FRONTEND
+        VITE_API_MODEL_URL=http://localhost:8000
+        VITE_MODEL_ROUTE=/models
+        VITE_MODEL_PREDICT_SUBROUTE=/predict
+        VITE_API_PERSISTANCE_URL=http://localhost:8001
 
-     INSURANCE_BACKEND_URL=http://insurance_backend:8000
+        # BACKEND URL - FOR DOCKER INTERNAL ACCESS
+        INSSURANCE_BACKEND_URL=http://inssurance_backend:8000
+
      ```
 
 2. **Build and start all services**
