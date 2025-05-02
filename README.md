@@ -64,30 +64,32 @@ flowchart TD
 
    * Copy `.env.example` to `.env` in the project root and adjust as needed:
 
-     ```env
-        # DATABASE CREDENTIAL - For developpement database
-        POSTGRES_USER=postgres
-        POSTGRES_PASSWORD=password
-        POSTGRES_DB=inssurance_data
+```env
+# DATABASE CREDENTIAL - For developpement database
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=password
+POSTGRES_DB=inssurance_data
 
-        # DATABASE URL - For access to database
-        DATABASE_URL=postgresql://postgres:password@db:5432/inssurance_data
+# DATABASE URL - For access to database
+DATABASE_URL=postgresql://postgres:password@db:5432/inssurance_data
 
-        # ENV VALUE FOR FRONTEND
-        VITE_API_MODEL_URL=http://localhost:8000
-        VITE_MODEL_ROUTE=/models
-        VITE_MODEL_PREDICT_SUBROUTE=/predict
-        VITE_API_PERSISTANCE_URL=http://localhost:8001
+# ENV VALUE FOR FRONTEND
+VITE_API_MODEL_URL=http://localhost:8000
+VITE_MODEL_ROUTE=/models
+VITE_MODEL_PREDICT_SUBROUTE=/predict
+VITE_API_PERSISTANCE_URL=http://localhost:8001
 
-        # BACKEND URL - FOR DOCKER INTERNAL ACCESS
-        INSSURANCE_BACKEND_URL=http://inssurance_backend:8000
+# BACKEND URL - FOR DOCKER INTERNAL ACCESS
+INSSURANCE_BACKEND_URL=http://inssurance_backend:8000
 
-     ```
+# SERVER IP (CORS)
+SERVER_DOMAIN=http://localhost
+```
 
 2. **Build and start all services**
 
    ```bash
-   docker-compose -f docker-compose.dev.yml up --build
+   docker compose -f docker-compose.dev.yml up --build
    ```
 
    > This will build and launch the database, API, persistence service, and frontend.
@@ -95,13 +97,13 @@ flowchart TD
 3. **Run database migrations**
 
    ```bash
-   docker-compose -f docker-compose.dev.yml --profile tools run --rm migrations
+   docker compose -f docker-compose.dev.yml --profile tools run --rm migrations
    ```
 
 4. **(Optional) Seed fake data**
 
    ```bash
-   docker-compose -f docker-compose.dev.yml --profile tools up --build --force-recreate seed
+   docker compose -f docker-compose.dev.yml --profile tools up --build --force-recreate seed
    ```
 
 > **Tip (Linux/macOS)**: prefix commands with `sudo` if you encounter permission errors.
@@ -155,11 +157,3 @@ flowchart TD
    ```
 
 ---
-
-## Contributing
-
-Please consult each service’s `CONTRIBUTING.md` for collaboration guidelines.
-
-## License
-
-This project is licensed under MIT. See the `LICENSE` file for details.

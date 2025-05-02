@@ -10,6 +10,7 @@ This module:
 
 import logging
 from contextlib import asynccontextmanager
+import os
 
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
@@ -17,6 +18,7 @@ from starlette.middleware.cors import CORSMiddleware
 from app.api.routes import router
 from app.seed.seed import seed_models_if_needed
 
+SERVER_DOMAIN = os.getenv("SERVER_DOMAIN")
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -31,9 +33,9 @@ async def debug_exception_handler(request, exc):
     raise exc
 
 origins = [
-    "http://localhost",
-    "http://localhost:80",
-    "http://localhost:5173",
+    f"{SERVER_DOMAIN}",
+    f"{SERVER_DOMAIN}:80",
+    f"{SERVER_DOMAIN}:5173",
 ]
 
 app.add_middleware(

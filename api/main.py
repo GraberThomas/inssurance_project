@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -7,13 +8,15 @@ from plan import build_recommendation
 from model_struct import AssuranceProfil
 from model_load import load_models
 
+SERVER_DOMAIN = os.getenv("SERVER_DOMAIN")
+
 models = load_models()
 app = FastAPI()
 
 origins = [
-    "http://localhost",
-    "http://localhost:80",
-    "http://localhost:5173",
+    SERVER_DOMAIN,
+    f"{SERVER_DOMAIN}:80",
+    f"{SERVER_DOMAIN}:5173",
 ]
 
 app.add_middleware(
