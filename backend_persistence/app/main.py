@@ -9,7 +9,7 @@ from starlette.middleware.cors import CORSMiddleware
 from app.api.routes import router
 from app.models import SQLModel
 from app.database import engine
-from app.seed import seed_models_if_needed
+from app.seed.seed import seed_models_if_needed
 
 
 @asynccontextmanager

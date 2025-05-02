@@ -3,3 +3,6 @@ sudo docker compose -f docker-compose.dev.yml up  --build
 
 Migrations:
 sudo docker compose -f docker-compose.dev.yml --profile tools run --rm migrations
+
+Seed fausse données:
+sudo docker compose -f docker-compose.dev.yml   --profile tools   up --build --force-recreate seed
