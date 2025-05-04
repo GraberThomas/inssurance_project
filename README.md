@@ -130,10 +130,10 @@ SERVER_DOMAIN=http://localhost
 
 ## Service Documentation
 
-* [data\_model/README.md](./data_model/README.md)  – ML model generation & training citeturn0file0
-* [api/README.md](./api/README.md)             – Prediction & recommendation endpoints citeturn0file1
-* [frontend/README.md](./frontend/README.md)   – User interface (React) citeturn0file2
-* [backend\_persistence/README.md](./backend_persistence/README.md) – Storage & history service citeturn0file3
+* [data\_model/README.md](./data_model/README.md)  – ML model generation & training
+* [api/README.md](./api/README.md)             – Prediction & recommendation endpoints
+* [frontend/README.md](./frontend/README.md)   – User interface (React)
+* [backend\_persistence/README.md](./backend_persistence/README.md) – Storage & history service
 
 ---
 

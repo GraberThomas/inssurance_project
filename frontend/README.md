@@ -89,8 +89,6 @@ VITE_MODEL_PREDICT_SUBROUTE=/predict
 - Jotai 2.12.3
 - SASS
 
-## Contributing
-Please refer to the repository's CONTRIBUTING.md file for guidelines on how to contribute to this project.
 
 ## Important Notes
 - This frontend is designed to work in conjunction with other microservices. Running it standalone will result in limited functionality.
